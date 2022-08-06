@@ -1,6 +1,9 @@
 const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
+const Baker = require('../models/baker.js')
+
+
 
 breads.get('/', (req, res) => {
   Bread.find()
@@ -9,6 +12,16 @@ breads.get('/', (req, res) => {
               breads: foundBreads,
               title: 'Index Page'
           })
+      })
+})
+
+// in the new route
+breads.get('/new', (req, res) => {
+    Baker.find()
+        .then(foundBakers => {
+            res.render('new', {
+                bakers: foundBakers
+            })
       })
 })
 
@@ -25,12 +38,6 @@ breads.get('/:id', (req, res) => {
     // })
 })
 
-
-// NEW
-breads.get('/new', (req, res) => {
-  res.render('new')
-})
-
 // CREATE
 breads.post('/', (req, res) => {
   if(!req.body.image) {
@@ -45,10 +52,6 @@ breads.post('/', (req, res) => {
   res.redirect('/breads')
 })
 
-
-
-
-
 // EDIT
 breads.get('/:id/edit', (req, res) => {
   Bread.findById(req.params.id) 
@@ -58,7 +61,6 @@ breads.get('/:id/edit', (req, res) => {
       })
     })
 })
-
 
 // UPDATE
 breads.put('/:id', (req, res) => {
@@ -74,7 +76,6 @@ breads.put('/:id', (req, res) => {
     })
 })
 
-
 // DELETE
 breads.delete('/:id', (req, res) => {
   Bread.findByIdAndDelete(req.params.id) 
@@ -82,6 +83,7 @@ breads.delete('/:id', (req, res) => {
       res.status(303).redirect('/breads')
     })
 })
+
 //create many
 breads.get('/data/seed', (req, res) => {
   Bread.insertMany([
