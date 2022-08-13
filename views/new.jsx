@@ -18,6 +18,14 @@ function New ({bakers}) {
             type="text"
             name="image"
             id="image"/>
+            <label htmlFor="baker">Baker</label>
+            <select name="baker" id="baker">
+              {bakers.map((baker) => {
+                return(
+                  <option value={baker.id} key={baker.id}>{baker.name}</option>
+                )
+              })}
+            </select>
           <label htmlFor="hasGluten">Has Gluten?</label>
           <input
             type="checkbox"
@@ -25,26 +33,11 @@ function New ({bakers}) {
             id="hasGluten"
             defaultChecked
           />
-
-          <label htmlFor="baker">Baker</label>
-      <select name="baker" id="baker">
-          {bakers.map((baker) => {
-              return(
-                  <option value={baker.id} key={baker.id}>{baker.name}</option>
-              )
-          })}
-      </select>
-
-          <br/>
+          <br />
           <input type="submit"/>
         </form>
-        <div className="backButton">
-  <a href="/breads"><button>Go back to the index</button></a>
-</div>
-
       </Default>
     )
 }
 
 module.exports = New
-
